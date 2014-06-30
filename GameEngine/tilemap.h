@@ -7,7 +7,10 @@ using namespace std;
 class Tile
 {
 public:
+	Tile();
 	bool isPassable;
+	bool isStartLocation;
+	bool isEndLocation;
 };
 
 class Map
@@ -15,9 +18,10 @@ class Map
 public:
 	Map();
 	~Map();
-	Tile** tile;
+	Tile* tile;
 	int ROW;
 	int COL;
+	void DrawMap(Map) const;
 
 };
 

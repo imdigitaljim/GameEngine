@@ -4,6 +4,41 @@
 
 using namespace std;
 
+Tile::Tile()
+{
+	isPassable = true;
+	isStartLocation = false;
+	isEndLocation = false;
+}
+void Map::DrawMap(Map tilemap) const
+{
+	for (int j = 0; j < ROW; j++)
+	{
+		for (int i = 0; i < COL; i++)
+		{
+
+			if (tile[i + j * COL].isEndLocation)
+			{
+				cout << "E";
+			}
+			else if (tile[i + j * COL].isStartLocation)
+			{
+				cout << "@";
+			}
+			else if (tile[i + j * COL].isPassable)
+			{
+				cout << "-";
+			}
+			else if (!tile[i + j * COL].isPassable)
+			{
+				cout << "X";
+			}
+		}
+		cout << endl;
+	}
+}
+
+
 Map::Map()
 {
 	// file extraction
@@ -18,54 +53,25 @@ Map::Map()
 	file >> ROW;
 	file.ignore();
 
-	// creating an [x][y] setup allocation
-	tile = new Tile*[COL]; // allocation of memory for column 
-
-	for (int i = 0; i < COL; i++)
-	{
-		tile[i] = new Tile[ROW]; // allocation for each row
-	}
-
+	// creating an [x * y] setup allocation
+	// accessible by [x + y * w(max x)]
+	tile = new Tile[COL * ROW]; // allocation of memory for column/ROW
 	for (int y = 0; y < ROW; y++)
 	{
 		for (int x = 0; x < COL; x++)
 		{
 			if (file.get() == 'X')
 			{
-				tile[x][y].isPassable = false;
-			}
-			else
-			{
-				tile[x][y].isPassable = true;
+				tile[x + y * COL].isPassable = false;
 			}
 		}
 		file.ignore();
 	}
 	file.close();
-
-	for (int y = 0; y < ROW; y++)
-	{
-		for (int x = 0; x < COL; x++)
-		{
-			if (tile[x][y].isPassable)
-			{
-				cout << "-";
-			}
-			else if (!tile[x][y].isPassable)
-			{
-				cout << "X";
-			}
-		}
-		cout << endl;
-	}
 }
 
 Map::~Map()
 {
 	cout << "~Map() has been called" << endl;
-	for (int i = 0; i < COL; i++)
-	{
-		delete[] tile[i];
-	}
 	delete[] tile;
 }
