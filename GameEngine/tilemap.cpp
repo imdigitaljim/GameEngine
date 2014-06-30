@@ -7,37 +7,31 @@ using namespace std;
 Tile::Tile()
 {
 	isPassable = true;
-	isStartLocation = false;
-	isEndLocation = false;
+	symbol = '-';
 }
-void Map::DrawMap(Map tilemap) const
+void Map::Draw() const
 {
-	for (int j = 0; j < ROW; j++)
+	for (int y = 0; y < ROW; y++)
 	{
-		for (int i = 0; i < COL; i++)
+		for (int x = 0; x < COL; x++)
 		{
-
-			if (tile[i + j * COL].isEndLocation)
-			{
-				cout << "E";
-			}
-			else if (tile[i + j * COL].isStartLocation)
-			{
-				cout << "@";
-			}
-			else if (tile[i + j * COL].isPassable)
-			{
-				cout << "-";
-			}
-			else if (!tile[i + j * COL].isPassable)
-			{
-				cout << "X";
-			}
+			cout << tile[x + y * COL].symbol;
 		}
 		cout << endl;
 	}
 }
 
+void Map::SetEnd(int x, int y)
+{
+	EndLocation = x + y * COL;
+	tile[EndLocation].symbol = 'E';
+}
+
+void Map::SetStart(int x, int y)
+{
+	StartLocation = x + y * COL;
+	tile[StartLocation].symbol = '@';
+}
 
 Map::Map()
 {
@@ -60,10 +54,7 @@ Map::Map()
 	{
 		for (int x = 0; x < COL; x++)
 		{
-			if (file.get() == 'X')
-			{
-				tile[x + y * COL].isPassable = false;
-			}
+			tile[x + y * COL].symbol = file.get();
 		}
 		file.ignore();
 	}
@@ -72,6 +63,5 @@ Map::Map()
 
 Map::~Map()
 {
-	cout << "~Map() has been called" << endl;
 	delete[] tile;
 }

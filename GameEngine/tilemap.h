@@ -9,8 +9,7 @@ class Tile
 public:
 	Tile();
 	bool isPassable;
-	bool isStartLocation;
-	bool isEndLocation;
+	char symbol;
 };
 
 class Map
@@ -18,10 +17,18 @@ class Map
 public:
 	Map();
 	~Map();
+	void SetEnd(int, int);
+	void SetStart(int, int);
+	void Draw() const;
+
+
+
+private:
 	Tile* tile;
+	unsigned int StartLocation;
+	unsigned int EndLocation;
 	int ROW;
 	int COL;
-	void DrawMap(Map) const;
 
 };
 

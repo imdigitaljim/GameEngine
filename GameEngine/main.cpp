@@ -8,21 +8,19 @@ using namespace std;
 int main()
 {
 	Map map;
-	string input;
-	int x;
-	int y;
+	int x, y;
+	map.Draw();
 	cout << "Enter Start Location 'X,Y'" << endl;
 	cin >> x;
 	cin.ignore();
 	cin >> y;
-	map.tile[x + y * map.COL].isStartLocation = true;
-
+	map.SetStart(x, y);
 	cout << "Enter End Location 'X,Y'" << endl;
 	cin >> x;
 	cin.ignore();
 	cin >> y;
-	map.tile[x + y * map.COL].isEndLocation = true;
-	map.DrawMap(map);
+	map.SetEnd(x, y);
+	map.Draw();
 
 	return 0;
 }
