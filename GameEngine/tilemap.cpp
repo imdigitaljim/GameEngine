@@ -11,7 +11,7 @@ Tile::Tile()
 	symbol = ' ';
 }
 
-void Map::Draw() const
+void Map::draw() const
 {
 	string tens;
 	string ones;
@@ -28,62 +28,66 @@ void Map::Draw() const
 		ones += to_string(i % 10);
 	}
 	cout << tens << endl << ones << endl << endl;
-
-	Tile * temp = &tile[0];
 	string map = "";
 	for (int y = 0; y < ROW; y++)
 	{
 		for (int x = 0; x < COL; x++)
 		{
-			map += temp->symbol;
-			temp++;
+			map += tile[x + y * COL].symbol;
 		}
 		map += " " + to_string(y) + "\n";
 	}
 	cout << map << endl;
 }
 
-int Map::GetXMax() const
+int Map::getXMax() const
 {
 	return COL;
 }
 
-int Map::GetYMax() const
+int Map::getYMax() const
 {
 	return ROW;
 }
 
-Tile Map::GetTile(int selection) const
+Tile Map::getTile(int selection) const
 {
 	return tile[selection];
 }
-Tile* Map::GetMap() const
+
+Tile Map::getTile(int x, int y) const
+{
+
+	return tile[x + y * COL];
+}
+
+vector<Tile> Map::getMap() const
 {
 	return tile;
 }
 
-Tile* Map::GetStart() const
+Tile* Map::getStart() const
 {
 	return start;
 }
 
-Tile* Map::GetEnd() const
+Tile* Map::getEnd() const
 {
 	return end;
 }
 
-void Map::UpdateMap(int num, char sym)
+void Map::updateMap(int num, char sym)
 {
 	tile[num].symbol = sym;
 }
 
-void Map::SetEnd(int x, int y)
+void Map::setEnd(int x, int y)
 {
 	end = &tile[x + y * COL];
 	end->symbol = 'E';
 }
 
-void Map::SetStart(int x, int y)
+void Map::setStart(int x, int y)
 {
 	start = &tile[x + y * COL];
 	start->symbol = '@';
@@ -103,25 +107,27 @@ Map::Map()
 	file >> ROW;
 	file.ignore();
 
-	// creating an [x * y] setup allocation
-	// accessible by [x + y * w(max x)]
-	tile = new Tile[COL * ROW]; // allocation of memory for column/ROW
-	for (int y = 0; y < ROW; y++)
+	int range = ROW * COL;
+	for (int i = 0; i < range; i++)
 	{
-		for (int x = 0; x < COL; x++)
+		if (i % COL == 0 && i != 0)
 		{
-			int position = x + y * COL;
-			tile[position].symbol = file.get();
-			tile[position].posX = x;
-			tile[position].posY = y;
-			tile[position].arrPos = position;
+			file.ignore();
 		}
-		file.ignore();
+		Tile temp;
+		temp.symbol = file.get();
+		if (temp.symbol == 'X')
+		{
+			temp.isPassable = false;
+		}
+		temp.posX = i % COL;
+		temp.posY = i / COL;
+		temp.arrayPos = temp.posX + temp.posY * COL;
+		tile.push_back(temp);
+
+
 	}
 	file.close();
 }
 
-Map::~Map()
-{
-	delete[] tile;
-}
+

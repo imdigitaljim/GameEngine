@@ -1,6 +1,6 @@
 #ifndef _H_TILEMAP
 #define _H_TILEMAP
-
+#include <vector>
 using namespace std;
 
 
@@ -10,9 +10,9 @@ public:
 	Tile();
 	bool isPassable;
 	char symbol;
-	unsigned int arrPos;
 	short unsigned int posX;
 	short unsigned int posY;
+	short unsigned int arrayPos;
 
 };
 
@@ -20,20 +20,22 @@ class Map
 {
 public:
 	Map();
-	~Map();
-	void SetEnd(int, int);
-	void SetStart(int, int);
-	void UpdateMap(int, char);
-	void Draw() const;
-	int GetXMax() const;
-	int GetYMax() const;
-	Tile GetTile(int) const;
-	Tile* GetStart() const;
-	Tile* GetMap() const;
-	Tile* GetEnd() const;
+	void setEnd(int, int);
+	void setStart(int, int);
+	void updateMap(int, char);
+	void draw() const;
+	int getXMax() const;
+	int getYMax() const;
+
+	Tile getTile(int) const; // by index
+	Tile getTile(int, int) const; // by coordinate
+
+	Tile* getStart() const;
+	vector<Tile> getMap() const;
+	Tile* getEnd() const;
 
 private:
-	Tile* tile;
+	vector<Tile> tile;
 	Tile* start;
 	Tile* end;
 	int ROW;

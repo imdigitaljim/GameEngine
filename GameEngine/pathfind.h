@@ -8,19 +8,23 @@ class Path
 {
 
 public:
-	Path(const Map);
-	int GetCurrentX() const;
-	int GetCurrentY() const;
-	int GetLevel() const;
-	void SetRemain();
-	int GetDistance() const;
-	void Draw();
+	void loadMap(const Map&);
+	bool isGood(int, int) const;
+	void search(int, int, int);
+	int getCurrentX() const;
+	int getCurrentY() const;
+	int getLevel() const;
+	void setRemain();
+	void setDistance();
+	int getDistance() const;
+	void draw();
+	void pathSearch(int&, int&, int&);
+	void drawGrid() const; // debug purposes
 
 private:
 	int distance;
-	Tile * open_map;
-	Tile * destination;
-	Tile * current;
+	Map map;
+	vector <vector<int> > mapGrid;
 };
 
 class Node

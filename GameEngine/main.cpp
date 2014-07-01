@@ -8,40 +8,43 @@ using namespace std;
 int main()
 {
 	Map map;
+	Path path;
 	int x, y;
-	map.Draw();
+	map.draw();
 	cout << "Enter Start Location 'X,Y'" << endl;
 	cin >> x;
 	cin.ignore();
 	cin >> y;
-	while (x < 0 || x > map.GetXMax() 
-		|| y < 0 || y > map.GetYMax() 
-		|| map.GetTile(x + y * map.GetXMax()).symbol == 'X')
+	while (x < 0 || x > map.getXMax()
+		|| y < 0 || y > map.getYMax()
+		|| map.getTile(x, y).symbol == 'X')
 	{
 		cout << "Out of bounds: Try again:" << endl << "X,Y:";
 		cin >> x;
 		cin.ignore();
 		cin >> y;
 	}
-	map.SetStart(x, y);
+	map.setStart(x, y);
 	cout << "Enter End Location 'X,Y'" << endl;
 	cin >> x;
 	cin.ignore();
 	cin >> y;
-	while (x < 0 || x > map.GetXMax()
-		|| y < 0 || y > map.GetYMax()
-		|| map.GetTile(x + y * map.GetXMax()).symbol == 'X')
+	while (x < 0 || x > map.getXMax()
+		|| y < 0 || y > map.getYMax()
+		|| map.getTile(x, y).symbol == 'X')
 	{
 		cout << "Out of bounds: Try again:" << endl << "X,Y:";
 		cin >> x;
 		cin.ignore();
 		cin >> y;
 	}
-	map.SetEnd(x, y);
-	map.Draw();
-	Path path(map);
+	map.setEnd(x, y);
+	path.loadMap(map);
+	map.draw();
 
-	cout << "Distance Left:" << to_string(path.GetDistance()) << endl;
+	cout << "Distance Left:" << to_string(path.getDistance()) << endl;
+
+	path.draw();
 	return 0;
 }
 
