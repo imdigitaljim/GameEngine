@@ -42,8 +42,6 @@ int main()
 	Path path(map);
 
 	cout << "Distance Left:" << to_string(path.GetDistance()) << endl;
-
-
 	return 0;
 }
 

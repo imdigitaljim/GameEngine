@@ -57,6 +57,10 @@ Tile Map::GetTile(int selection) const
 {
 	return tile[selection];
 }
+Tile* Map::GetMap() const
+{
+	return tile;
+}
 
 Tile* Map::GetStart() const
 {

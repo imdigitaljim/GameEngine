@@ -29,6 +29,7 @@ public:
 	int GetYMax() const;
 	Tile GetTile(int) const;
 	Tile* GetStart() const;
+	Tile* GetMap() const;
 	Tile* GetEnd() const;
 
 private:

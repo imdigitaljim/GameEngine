@@ -2,6 +2,8 @@
 #define _H_PATHFIND
 #include "tilemap.h"
 
+using namespace std;
+
 class Path
 {
 
@@ -10,18 +12,21 @@ public:
 	int GetCurrentX() const;
 	int GetCurrentY() const;
 	int GetLevel() const;
-	int GetRemain();
+	void SetRemain();
 	int GetDistance() const;
 	void Draw();
 
 private:
-	int level; // units traveled;
 	int distance;
+	Tile * open_map;
 	Tile * destination;
 	Tile * current;
 };
 
-
+class Node
+{
+	Node *next;
+};
 
 
 #endif
