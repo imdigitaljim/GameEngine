@@ -129,3 +129,14 @@ Map::Map()
 }
 
 
+bool Map::isGood(int x, int y) const
+{
+	if (x < 0 || y < 0 || x >= getXMax() || y >= getYMax()){
+		return false;
+	}
+
+	if (!getTile(x, y).isPassable){
+		return false;
+	}
+	return true;
+}

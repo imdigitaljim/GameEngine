@@ -17,9 +17,7 @@ int main()
 	cin >> x;
 	cin.ignore();
 	cin >> y;
-	while (x < 0 || x > map.getXMax()
-		|| y < 0 || y > map.getYMax()
-		|| map.getTile(x, y).symbol == 'X')
+	while (!map.isGood(x, y))
 	{
 		cout << "Out of bounds: Try again:" << endl << "X,Y:";
 		cin >> x;
@@ -32,9 +30,7 @@ int main()
 	cin >> x;
 	cin.ignore();
 	cin >> y;
-	while (x < 0 || x > map.getXMax()
-		|| y < 0 || y > map.getYMax()
-		|| map.getTile(x, y).symbol == 'X')
+	while (!map.isGood(x, y))
 	{
 		cout << "Out of bounds: Try again:" << endl << "X,Y:";
 		cin >> x;
@@ -53,4 +49,3 @@ int main()
 
 	return 0;
 }
-

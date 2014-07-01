@@ -25,17 +25,7 @@ void Path::loadMap(const Map& m)
 	setDistance();
 }
 
-bool Path::isGood(int x, int y) const
-{
-	if (x < 0 || y < 0 || x >= map.getXMax() || y >= map.getYMax()){
-		return false;
-	}
 
-	if (!map.getTile(x, y).isPassable){
-		return false;
-	}
-	return true;
-}
 
 void Path::search(int x, int y, int level) //recursive search
 {
@@ -48,13 +38,13 @@ void Path::search(int x, int y, int level) //recursive search
 		return;
 	}
 	level++;
-	if (isGood(x + 1, y))
+	if (map.isGood(x + 1, y))
 		search(x + 1, y, level);
-	if (isGood(x - 1, y))
+	if (map.isGood(x - 1, y))
 		search(x - 1, y, level);
-	if (isGood(x, y + 1))
+	if (map.isGood(x, y + 1))
 		search(x, y + 1, level);
-	if (isGood(x, y - 1))
+	if (map.isGood(x, y - 1))
 		search(x, y - 1, level);
 }
 

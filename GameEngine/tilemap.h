@@ -26,7 +26,7 @@ public:
 	void draw() const;
 	int getXMax() const;
 	int getYMax() const;
-
+	bool isGood(int, int) const;
 	Tile getTile(int) const; // by index
 	Tile getTile(int, int) const; // by coordinate
 

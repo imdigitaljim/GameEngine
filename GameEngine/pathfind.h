@@ -9,7 +9,7 @@ class Path
 
 public:
 	void loadMap(const Map&);
-	bool isGood(int, int) const;
+
 	void search(int, int, int);
 	int getCurrentX() const;
 	int getCurrentY() const;
