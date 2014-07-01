@@ -7,16 +7,16 @@
 using namespace std;
 
 
-void Path::setRemain()
+void Path::setDirection()
 {
-	int dRemain;
-	int xRemain = map.getEnd()->posX - map.getStart()->posX;
-	int yRemain = map.getEnd()->posY - map.getStart()->posY;
-	//Euclidian Distance sqrt(x^2 + y^2)
-	dRemain = static_cast<int>(sqrt(xRemain*xRemain + yRemain*yRemain));
-	distance = dRemain;
+	int dx = map.getEnd()->posX - map.getStart()->posX;
+	int dy = map.getEnd()->posY - map.getStart()->posY;
+	//Euclidian Distance sqrt(x^2 + y^2) if needed
+	int dRemain = static_cast<int>(sqrt(dx*dx + dy*dy));
 
 }
+
+
 void Path::loadMap(const Map& m)
 {
 	map = m;
@@ -34,29 +34,28 @@ bool Path::isGood(int x, int y) const
 	if (!map.getTile(x, y).isPassable){
 		return false;
 	}
-
 	return true;
 }
 
-void Path::search(int x, int y, int count) //recursive search
+void Path::search(int x, int y, int level) //recursive search
 {
-	if (mapGrid[x][y] > count)
+	if (mapGrid[x][y] > level)
 	{
-		mapGrid[x][y] = count;
+		mapGrid[x][y] = level;
 	}
 	else
 	{
 		return;
 	}
-	count++;
+	level++;
 	if (isGood(x + 1, y))
-		search(x + 1, y, count);
+		search(x + 1, y, level);
 	if (isGood(x - 1, y))
-		search(x - 1, y, count);
+		search(x - 1, y, level);
 	if (isGood(x, y + 1))
-		search(x, y + 1, count);
+		search(x, y + 1, level);
 	if (isGood(x, y - 1))
-		search(x, y - 1, count);
+		search(x, y - 1, level);
 }
 
 
@@ -65,12 +64,19 @@ void Path::draw()
 {
 	int x = map.getEnd()->posX;
 	int y = map.getEnd()->posY;
-	int count = distance;
-	while (count > 0)
+	int level = distance - 1;
+	if (level >= 900)
 	{
-		pathSearch(x, y, count);
+		cout << "Path not found" << endl;
 	}
-	map.draw();
+	else
+	{
+		while (level > 0)
+		{
+			pathSearch(x, y, level);
+		}
+		map.draw();
+	}
 }
 
 void Path::drawGrid() const
@@ -87,27 +93,26 @@ void Path::drawGrid() const
 }
 
 
-void Path::pathSearch(int& x, int& y, int& count)
+void Path::pathSearch(int& x, int& y, int& level)
 {
-	if (mapGrid[x - 1][y] == count)
+	if (mapGrid[x - 1][y] == level)
 	{
 		x -= 1;
 	}
-	else if (mapGrid[x + 1][y] == count)
+	else if (mapGrid[x + 1][y] == level)
 	{
 		x += 1;
 	}
-	else if (mapGrid[x][y - 1] == count)
+	else if (mapGrid[x][y - 1] == level)
 	{
 		y -= 1;
 	}
-	else if (mapGrid[x][y + 1] == count)
+	else if (mapGrid[x][y + 1] == level)
 	{
 		y += 1;
 	}
-	count--;
-	map.updateMap(x + y * map.getXMax(), 'p');
-	cout << "Count Update: " << count << endl;
+	level--;
+	map.updateMap(x + y * map.getXMax(), 249);
 }
 
 void Path::setDistance()

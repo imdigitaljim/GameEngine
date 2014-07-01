@@ -10,6 +10,8 @@ int main()
 	Map map;
 	Path path;
 	int x, y;
+	cout << "Here's the selected maze of size: " << map.getXMax() << ", " << map.getYMax();
+	cout << endl << endl;
 	map.draw();
 	cout << "Enter Start Location 'X,Y'" << endl;
 	cin >> x;
@@ -24,6 +26,7 @@ int main()
 		cin.ignore();
 		cin >> y;
 	}
+	cout << endl;
 	map.setStart(x, y);
 	cout << "Enter End Location 'X,Y'" << endl;
 	cin >> x;
@@ -38,13 +41,16 @@ int main()
 		cin.ignore();
 		cin >> y;
 	}
+	cout << endl;
 	map.setEnd(x, y);
 	path.loadMap(map);
-	map.draw();
 
-	cout << "Distance Left:" << to_string(path.getDistance()) << endl;
-
+	//cout << "The start and end points have been added." << endl << endl;
+	//map.draw();
+	cout << "Here's the path found for your maze: " << endl << endl;
 	path.draw();
+	cout << endl << "Distance Traveled:" << to_string(path.getDistance()) << endl;
+
 	return 0;
 }
 

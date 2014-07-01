@@ -14,7 +14,7 @@ public:
 	int getCurrentX() const;
 	int getCurrentY() const;
 	int getLevel() const;
-	void setRemain();
+	void setDirection();
 	void setDistance();
 	int getDistance() const;
 	void draw();

@@ -57,7 +57,6 @@ Tile Map::getTile(int selection) const
 
 Tile Map::getTile(int x, int y) const
 {
-
 	return tile[x + y * COL];
 }
 
@@ -90,7 +89,7 @@ void Map::setEnd(int x, int y)
 void Map::setStart(int x, int y)
 {
 	start = &tile[x + y * COL];
-	start->symbol = '@';
+	start->symbol = 'S';
 }
 
 Map::Map()
@@ -116,16 +115,15 @@ Map::Map()
 		}
 		Tile temp;
 		temp.symbol = file.get();
-		if (temp.symbol == 'X')
+		if (temp.symbol == '#')
 		{
 			temp.isPassable = false;
+			temp.symbol = 178;
 		}
 		temp.posX = i % COL;
 		temp.posY = i / COL;
 		temp.arrayPos = temp.posX + temp.posY * COL;
 		tile.push_back(temp);
-
-
 	}
 	file.close();
 }
