@@ -40,7 +40,6 @@ Icon
 *.pdb
 *.opensdf
 *.sdf
-*.sln
 *.suo
 *.log
 *.tlog
